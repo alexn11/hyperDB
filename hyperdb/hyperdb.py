@@ -2,7 +2,10 @@ import gzip
 import pickle
 
 import numpy as np
-import openai
+try:
+    import openai
+except ImportError:
+    openai = None
 
 from hyperdb.galaxy_brain_math_shit import (
     dot_product,
