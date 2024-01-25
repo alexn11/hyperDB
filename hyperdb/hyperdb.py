@@ -8,8 +8,8 @@ try:
 except ImportError:
     openai = None
 
-sys.path.append('./hyperDB') #
-from hyperdb.galaxy_brain_math_shit import (
+#sys.path.append('./hyperDB') #
+from hyperDB.hyperdb.galaxy_brain_math_shit import (
     dot_product,
     adams_similarity,
     cosine_similarity,
