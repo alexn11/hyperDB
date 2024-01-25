@@ -1,5 +1,6 @@
 import gzip
 import pickle
+import sys #
 
 import numpy as np
 try:
@@ -7,6 +8,7 @@ try:
 except ImportError:
     openai = None
 
+sys.path.append('./hyperDB') #
 from hyperdb.galaxy_brain_math_shit import (
     dot_product,
     adams_similarity,
@@ -62,10 +64,10 @@ class HyperDB:
         self.documents = []
         self.vectors = None
         self.embedding_function = embedding_function or (
-            lambda docs: get_embedding(docs, key=key)
+            lambda docs: get_embedding(docs, key=key)[0] #
         )
         if vectors is not None:
-            self.vectors = vectors
+            self.vectors = np.array(vectors)
             self.documents = documents
         else:
             self.add_documents(documents)
@@ -147,7 +149,7 @@ class HyperDB:
         self.documents = data["documents"]
 
     def query(self, query_text, top_k=5, return_similarities=True):
-        query_vector = self.embedding_function([query_text])[0]
+        query_vector = self.embedding_function([query_text]) #
         ranked_results, similarities = hyper_SVM_ranking_algorithm_sort(
             self.vectors, query_vector, top_k=top_k, metric=self.similarity_metric
         )
